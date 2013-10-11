@@ -1,0 +1,349 @@
+<head>
+	<title>PHD Consortium</title>
+</head>
+
+<body>
+{{>nav}}
+	<div class="container">
+	{{> mainList}}
+	{{> courseList}}
+	{{> myCourse}}
+	{{> newCourse}}
+	{{> memberModal}}
+	</div>
+</body>
+<template name="nav">
+	<div class="container">
+		<div class="navbar navbar-static-top navbar-inverse" id="topNav">
+			<div class="navbar-inner">
+			    <a class="brand" id="allCourse" href="#">Upcoming Courses</a>
+				<ul class="nav">
+					{{#if currentUser}}<li><a href="#" id="zCourse">All Courses</a></li>
+					<li><a href="#" id="myCourse">My Courses</a></li>
+					<li><a href="#" id="addMyCourse">Add Course</a></li>{{/if}}
+					{{#if adminUp}}<li><a href="#" id="addMember" >Add Member</a></li>{{/if}}
+				</ul>
+				<div class="pull-right" style="padding-top:8px">{{loginButtons align="right"}}</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="mainList">
+	<div id="mainList">
+		<h2>Charles River Research Corridor</h2>
+		<p><strong>Ph.D. Courses in Strategy, Innovation and Entrepreneurship</strong><br/>
+		Boston University Management - Harvard Business School - MIT Sloan School</p>
+		<hr>
+		<div class="accordion" id="accordion">
+		{{#each upcomingSem}}
+			<h4>{{semesterNamex}}</h4>
+			{{#each coursex}}
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#{{zId}}">
+							<span style="font-size:18px;">{{courseName}}</span>
+							<span class="pull-right"><strong>{{courseNumber}} | {{schoolName}}</strong></span>
+						</a>
+					</div>
+					<div id="{{oId}}" class="accordion-body collapse">
+						<div class="accordion-inner">
+							<div class="row">
+								<div class="span2">
+									<p><strong>Instructors:</strong><br/>
+									{{instructors}}</p>
+									<p><strong>Frequency:</strong><br/> 
+									{{courseFreq}}</p>
+									{{#if syllabusLink1}}
+									<p><a target="_blank" href="{{syllabusLink}}" class="btn btn-mini btn-info" style="margin-top:10px;">View Syllabus</a></p>
+									{{/if}}
+								</div>
+								<div class="span9">
+									<p><strong>Description:</strong></p>
+									<div>
+										<p><textarea style="width:100%;" rows="10" disabled>{{courseDescr}}</textarea></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{{/each}}
+		{{/each}}
+		</div>
+		<br/><hr>
+	</div>
+</template>
+
+<template name="courseList">
+	<div id="courseList" style="display:none;">
+		<h2>All Courses</h2>
+		<div class="accordion" id="accordion5">
+			{{#each schoolList}}
+				<h4>{{this}}</h4>
+				{{#each schoolCourses}}
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#all{{_id}}">
+								<span style="font-size:18px;">{{courseName}}</span>
+								<span class="pull-right"><strong>{{courseNumber}} | {{schoolName}}</strong></span>
+							</a>
+						</div>
+						<div id="all{{_id}}" class="accordion-body collapse">
+							<div class="accordion-inner">
+								<div class="row">
+									<div class="span2">
+										<p><strong>Instructors:</strong><br/>
+										{{instructors}}</p>
+										<p><strong>Frequency:</strong><br/> 
+										{{courseFreq}}</p>
+										<p><strong>Last Taught: </strong> {{prevSem1}} {{#if prevYear}}{{prevYear}}{{/if}}</p>
+										<p><strong>Next Taught: </strong> {{nextSem1}} {{#if nextYear}}{{nextYear}}{{/if}}</p>
+										{{#if syllabusLink1}}
+										<p><a target="_blank" href="{{syllabusLink}}" class="btn btn-mini btn-info" style="margin-top:10px;">View Syllabus</a></p>
+										{{/if}}
+									</div>
+									<div class="span9">
+										<p><strong>Description:</strong></p>
+										<div>
+											<p><textarea style="width:100%;" rows="10" disabled>{{courseDescr}}</textarea></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{{/each}}
+			{{/each}}
+		</div>
+	</div>
+</template>
+
+<template name="myCourse">
+	<div id="myCourseList" style="display:none;">
+		<h2>My Courses</h2>
+		<div class="accordion" id="accordion3">
+		{{#each ownedCourse}}
+			<div class="accordion-group">
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#my{{_id}}">
+						<strong>{{courseName}}</strong>
+						<span class="pull-right"><strong>{{courseNumber}} | {{schoolName}}</strong></span>
+					</a>
+				</div>
+				<div id="my{{_id}}" class="accordion-body collapse">
+					<div class="accordion-inner">
+						<div class="row">
+							<div class="span4">
+								<p><strong>Course Name</strong><br/>
+									<input type="text" class="crsname" value="{{courseName}}">
+								</p>
+								<p><strong>Course Number</strong><br/>
+									<input type="text" class="crsnumber" value="{{courseNumber}}" maxlength="8">
+								</p>
+								<p><strong>School</strong><br/>
+									<select class="schoolName">
+										<option value="BU Management" {{SchoolSel 'BU Management'}}>BU Management</option>
+										<option value="Harvard HBS" {{SchoolSel 'Harvard HBS'}}>Harvard HBS</option>
+										<option value="MIT Sloan" {{SchoolSel 'MIT Sloan'}}>MIT Sloan</option>
+										<option value="Other" {{SchoolSel 'Other'}}>Other</option>
+									</select>
+								</p>
+								<p><strong>Instructors:</strong><br/>
+									<input type="text" class="instructors" value="{{instructors}}"></p>
+								<p><strong>Last Taught:</strong><br/>
+									<select class="prevSem">
+										<option value="Never" {{PrevSemSel "Never"}}>-</option>
+										<option value="0" {{PrevSemSel 0}}>Spring</option>
+										<option value="1" {{PrevSemSel 1}}>Summer</option>
+										<option value="2" {{PrevSemSel 2}}>Fall</option>
+									</select>
+									<input type="text" class="prevYear" value="{{#if prevYear}}{{prevYear}}{{/if}}">
+								</p>
+								<!-- <p>prevTaught: {{prevTaught}}</p> -->
+								<p><strong>Next Taught</strong><br/>
+									<select class="nextSem">
+										<option value="Never" {{NextSemSel "Never"}}>-</option>
+										<option value="0" {{NextSemSel 0}}>Spring</option>
+										<option value="1" {{NextSemSel 1}}>Summer</option>
+										<option value="2" {{NextSemSel 2}}>Fall</option>
+									</select>
+									<input type="text" class="nextYear" value="{{nextYear}}">
+								</p>
+								<!-- <p>nextTaught: {{nextTaught}}</p> -->
+								<p><strong>Frequency:</strong><br/> 
+								<select class="courseFreq">
+									<option value="everyYear" {{courseFreqSel 'Every Year'}} >Every Year</option>
+									<option value="otherYear" {{courseFreqSel 'Every Other Year'}} >Every Other Year</option>
+									<option value="other" {{courseFreqSel 'Other'}} >Other</option>
+								</select>
+								<input type="text" class="courseFreqOther" value="{{courseFreqOther}}" placeholder="If Other"/></p>
+								<!-- <p>courseFreqOther: {{courseFreqOther}}</p> -->
+								<p><strong>Syllabus:</strong><br/>
+								<input type="text" class="syllabus" value="{{#if syllabusLink}}{{syllabusLink}}{{else}}http://{{/if}}" placeholder="URL (including http://)"></p>
+							</div>
+							<div class="span7">
+								<p><strong>Description:</strong></p>
+								<div>
+									<textarea rows="20" style="width:100%" class="courseDescr">{{courseDescr}}</textarea>
+								</div>
+								<p><strong>Owned By: </strong> <span class="label label-inverse"> {{creatorName}} </span><br>
+									
+								</p>
+								<p><strong>Shared With:</strong><br>
+									{{#each owners}}
+										<span class="label label-info">{{ownerName}}</span>
+										<!-- <div class="alert alert-info" style="margin-bottom:2px;padding-right:10px;"><span>{{ownerName}}</span></div> -->
+									{{/each}}
+								</p>
+								{{#if creator}}
+								<div class="row">
+									<div class="span3">
+										<p><strong>Add Owners</strong><br>
+											<select class="newOwn span3">
+												<option value="null">-</option>
+											{{#each allUsers}}
+												<option value="{{_id}}">{{username}}</option>
+											{{/each}}
+											</select>
+										</p>
+									</div>
+									<div class="span3">
+										<p><strong>Remove Owners</strong><br>
+											<select class="delOwn span3">
+												<option value="null">-</option>
+											{{#each allUsers}}
+												<option value="{{_id}}">{{username}}</option>
+											{{/each}}
+											</select>
+										</p>
+									</div>
+								</div>
+								{{/if}}
+							</div>
+							<div class="text-center span11" style="padding-top:35px;margin-bottom:35px;">
+								<a href="#" class="btn updatebtn btn-success">Update</a>
+								<span>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+								{{#if creator}}
+								<a href="#" class="btn deletebtn btn-danger">Delete</a>
+								{{/if}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{{/each}}	
+		</div>
+	</div>
+</template>
+
+<template name="newCourse">
+	<div id="newCourse" style="display:none;">
+		<h2>New Course</h2>
+		<form class="form-horizontal">
+		<div class="control-group">
+			<label class="control-label">Course Name:</label>
+			<div class="controls">
+				<input type="text" id="courseName">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Course Number:</label>
+			<div class="controls">
+				<input type="text" id="courseNumber" maxlength="8">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">School:</label>
+			<div class="controls">
+				<select id="schoolName">
+					<option value="BU Management">BU Management</option>
+					<option value="Harvard HBS">Harvard HBS</option>
+					<option value="MIT Sloan">MIT Sloan</option>
+					<option value="Other">Other</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Instructors:</label>
+			<div class="controls">
+				<input type="text" id="instructors">
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">Description:</label>
+			<div class="controls">
+				<textarea id="courseDescr" rows="5" class="span5"></textarea>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Previous Semester Taught:</label>
+			<div class="controls">
+				<select class="span2" id="prevSem">
+					<option value="Never">-</option>
+					<option value="0">Spring</option>
+					<option value="1">Summer</option>
+					<option value="2">Fall</option>
+				</select>
+				<input class="span2" type="text" id="prevYear" placeholder="eg. 2013">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Next Planned Semester Teaching:</label>
+			<div class="controls">
+				<select class="span2" id="nextSem">
+					<option value="Never">-</option>
+					<option value="0">Spring</option>
+					<option value="1">Summer</option>
+					<option value="2">Fall</option>
+				</select>
+				<input class="span2" type="text" id="nextYear" placeholder="eg. 2013">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Course Frequency</label>
+			<div class="controls">
+				<select class="span2" id="courseFreq">
+					<option value="everyYear">Every Year</option>
+					<option value="otherYear">Every Other Year</option>
+					<option value="other">Other</option>
+				</select>
+				<input class="span2" type="text" id="courseFreqOther" placeholder="If Other" maxlength="8">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Syllabus:</label>
+			<div class="controls">
+				<input type="text" id="syllabus" placeholder="URL (including http://)" value="http://">
+			</div>
+		</div>
+		</form>
+		<div class="form-actions">
+			<button class="btn btn-primary" id="addCourse">New Course</button>
+			<button class="btn">Cancel</button>
+		</div>
+	</div>
+</template>
+
+<template name="memberModal">
+	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3 id="myModalLabel">Add a Member</h3>
+	  </div>
+	  <div class="modal-body">
+	    <p>Username:<br/><input type="text" id="newUserName"/></p>
+	    <p>Email:<br/><input type="email" id="newUserEmail"/></p>
+	  </div>
+	  <div class="modal-footer">
+	    <button class="btn pull-left" data-dismiss="modal" aria-hidden="true">Cancel</button>
+	    <button class="btn btn-primary" id="addNewMember">Send Invite</button>
+	  </div>
+	</div>
+</template>

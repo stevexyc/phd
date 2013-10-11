@@ -1,0 +1,46 @@
+html {
+	background: url('/furley_bg.png');
+	/*background: url('/white_wall.png');*/
+	/*background: url('/boston_blue.jpg') no-repeat center center fixed;*/
+	/*background-size: cover;*/
+}
+body {
+	background: transparent;
+}
+h2, h3 {
+	font-weight: normal;
+}
+.accordion-group {
+	-webkit-box-shadow: -1px 1px 2px #adadad;
+	-moz-box-shadow:    -1px 1px 2px #adadad;
+	box-shadow:         -1px 1px 2px #adadad;
+	margin-bottom: 5px;
+	overflow: auto;
+	/*border-width: 2px;*/
+}
+.accordion-heading {
+	background: #efefef;
+} 
+.accordion-heading a {
+	font-weight: normal;
+}
+.accordion-body {
+	background-color: #f8f8f8;
+}
+#topNav {
+}
+#allCourse{
+	color: #efefef;
+}
+a{
+	color: #313131;
+}
+a.login-link-text {
+	color: #f8f8f8;
+}
+#login-buttons a, .accounts-dialog a { 
+	text-decoration: none;
+}
+textarea[disabled] {
+	cursor: default !important;
+}

@@ -1,0 +1,43 @@
+<h3>Previous Courses</h3>
+			<div class="accordion" id="accordion2">
+			{{#each prevCourse}}
+				{{#if prevRightSem}}
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{_id}}">
+								<span style="font-size:18px;">{{courseName}}</span>
+								<span class="pull-right"><strong>{{courseNumber}} | {{schoolName}}</strong></span>
+							</a>
+						</div>
+						<div id="{{_id}}" class="accordion-body collapse">
+							<div class="accordion-inner">
+								<div class="row">
+									<div class="span2">
+										<p><strong>Instructors:</strong><br/>
+										{{instructors}}</p>
+										<p><strong>Last Taught:</strong><br/>
+											{{prevSem1}} {{#if prevYear}}{{prevYear}}{{/if}} 
+										</p>
+										<!-- <p>prevTaught: {{prevTaught}}</p> -->
+										<p><strong>Next Taught</strong><br/>
+											{{nextSem1}} {{#if nextYear}}{{nextYear}}{{/if}}
+										</p>
+										<!-- <p>nextTaught: {{nextTaught}}</p> -->
+										<p><strong>Frequency:</strong><br/> 
+										{{courseFrequency}}</p>
+										<!-- <p>courseFreqOther: {{courseFreqOther}}</p> -->
+										<p><a target="_blank" href="{{syllabusLink}}" class="btn btn-mini btn-info" style="margin-top:10px;">View Syllabus</a></p>
+									</div>
+									<div class="span9">
+										<p><strong>Description:</strong></p>
+										<div>
+											<p><textarea style="width:100%;" rows="10" disabled>{{courseDescr}}</textarea></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{{/if}}
+			{{/each}}	
+			</div>
