@@ -312,7 +312,7 @@ Template.myCourse.events {
 			if delOwners isnt "null"
 				courses.update({_id:this._id}, {$pull: {owners: delOwners}})	
 	'click .deletebtn': (e,t) ->
-		console.log this._id
+		# console.log this._id
 		courses.remove({_id: this._id})
 }
 
@@ -320,10 +320,11 @@ Template.memberModal.events {
 	'click #addNewMember': (e,t) ->
 		newUserName = $('#newUserName').val()
 		newUserEmail = $('#newUserEmail').val()
-		console.log newUserEmail + ', ' + newUserName
+		# console.log newUserEmail + ', ' + newUserName
 		Meteor.call('addMember', newUserName, newUserEmail)
 		$('#newUserName').val('')
 		$('#newUserEmail').val('')
+		$('#myModal').modal('hide')
 }
 
 convertPrevSem = (Sem) ->
@@ -340,7 +341,7 @@ convertNextSem = (Sem) ->
 
 isAdmin = (userId) ->
 	tmp = Meteor.users.findOne({_id: userId}).username
-	console.log tmp
+	# console.log tmp
 	if tmp is 'admin' or tmp is 'fsuarez' or tmp is 'tsimcoe'
 		true
 	else false
