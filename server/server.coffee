@@ -1,7 +1,7 @@
 courses = new Meteor.Collection('Courses')
 
 Meteor.startup ->
-	# process.env.MAIL_URL = 'smtp://postmaster%40meteorize.mailgun.org:YOURPASSWORD@smtp.mailgun.org:587';
+	process.env.MAIL_URL = 'smtp://localhost:587';
 	if Meteor.users.find().count() is 0
 		options = 
 			username: 'admin'
