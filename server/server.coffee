@@ -18,12 +18,15 @@ Meteor.publish('Courses',() ->
 )
 
 Meteor.methods {
-	addMember: (usrname, usremail)->
-		newuserId = Accounts.createUser {
-			username: usrname
-			email: usremail
-		}
-		Accounts.sendEnrollmentEmail(newuserId)
+  deleteUser: (userId) ->
+    Meteor.users.remove(userId) 
+
+  addMember: (usrname, usremail)->
+    newuserId = Accounts.createUser {
+      username: usrname
+      email: usremail
+    }
+    Accounts.sendEnrollmentEmail(newuserId)
 }
 
 Accounts.config {

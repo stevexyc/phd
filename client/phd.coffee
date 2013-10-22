@@ -316,6 +316,9 @@ Template.myCourse.events {
 		courses.remove({_id: this._id})
 }
 
+Template.memberModal.Member = () ->
+	Meteor.users.find()
+
 Template.memberModal.events {
 	'click #addNewMember': (e,t) ->
 		newUserName = $('#newUserName').val()
@@ -325,6 +328,11 @@ Template.memberModal.events {
 		$('#newUserName').val('')
 		$('#newUserEmail').val('')
 		$('#myModal').modal('hide')
+
+	'dblclick .DelUser': (e,t) ->
+		rfd = this._id 
+		console.log rfd
+		Meteor.call('deleteUser', rfd)
 }
 
 convertPrevSem = (Sem) ->

@@ -22,7 +22,9 @@
 					{{#if currentUser}}
 					<li><a href="#" id="myCourse">My Courses</a></li>
 					<li><a href="#" id="addMyCourse">Add Course</a></li>{{/if}}
-					{{#if adminUp}}<li><a href="#" id="addMember" >Add Member</a></li>{{/if}}
+					{{#if adminUp}}
+						<li><a href="#" id="addMember" >Members</a></li>
+					{{/if}}
 				</ul>
 				<div class="pull-right" style="padding-top:8px">{{loginButtons align="right"}}</div>
 			</div>
@@ -336,15 +338,34 @@
 	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-header">
 	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-	    <h3 id="myModalLabel">Add a Member</h3>
+	    <h3 id="myModalLabel">Members</h3>
 	  </div>
 	  <div class="modal-body">
-	    <p>Username:<br/><input type="text" id="newUserName"/></p>
+	  	<table class="table table-striped table-bordered table-condensed">
+	  		<thead>
+	  			<tr>
+		  			<th>Name</th>
+		  			<th>Email</th>
+		  			<th>Action</th>
+	  			</tr>
+	  		</thead>
+	  		<tbody>
+		  	{{#each Member}}
+		  		<tr>
+			  		<td>{{username}}</td>
+			  		<td>{{#each emails}}{{address}}{{/each}}</td>
+			  		<td><button class="btn btn-mini btn-danger DelUser" >x</button></td>
+		  		</tr>
+		  	{{/each}}
+		  	</tbody>
+	  	</table>
+	  	<h3>Add Member</h3>
+	    <p>Name:<br/><input type="text" id="newUserName"/></p>
 	    <p>Email:<br/><input type="email" id="newUserEmail"/></p>
+	    <button class="btn btn-primary" id="addNewMember">Send Invite</button>
 	  </div>
 	  <div class="modal-footer">
 	    <button class="btn pull-left" data-dismiss="modal" aria-hidden="true">Cancel</button>
-	    <button class="btn btn-primary" id="addNewMember">Send Invite</button>
 	  </div>
 	</div>
 </template>
