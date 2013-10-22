@@ -176,6 +176,9 @@ Template.courseList.prevSem1 = ()->
 Template.courseList.nextSem1 = ()->
 	convertPrevSem(this.nextSem)
 
+Template.courseList.syllabusLink1 = ()->
+	if this.syllabusLink.length > 7 then true
+
 goAnchor = () ->
 	findSeason = $('#findSeason').find(":selected").val()
 	findYear = $('#findYear').val().trim()
@@ -200,6 +203,7 @@ Template.newCourse.events {
 		else nextTaught = false
 		courseFreq = $('#courseFreq').find(":selected").text()
 		courseFreqOther = $('#courseFreqOther').val();
+		contactInfo = $('#contactInfo').val().trim();
 		syllabusLink = $('#syllabus').val().trim()
 		creator = Meteor.userId()
 		# console.log(courseName + ',' + courseNumber + ',' + schoolName)
@@ -224,6 +228,7 @@ Template.newCourse.events {
 				nextTaught: nextTaught
 				courseFreq: courseFreq
 				courseFreqOther: courseFreqOther
+				contactInfo: contactInfo
 				syllabusLink: syllabusLink
 			}
 			window.location.reload();
@@ -263,7 +268,8 @@ Template.myCourse.allUsers = ()->
 	# Meteor.users.find({})
 
 Template.myCourse.creator = ()->
-	if Meteor.userId() is this.creator then true
+	true
+	# if Meteor.userId() is this.creator then true
 
 Template.myCourse.events {
 	'click .updatebtn': (e,t)->
@@ -285,11 +291,13 @@ Template.myCourse.events {
 		else nextTaught = false
 		courseFreq = $('#my' + this._id + ' .courseFreq').find(":selected").text()
 		courseFreqOther = $('#my' + this._id + ' .courseFreqOther').val();
+		contactInfo = $('#my'+ this._id + ' .contactInfo').val().trim();
 		syllabusLink = $('#my' + this._id + ' .syllabus').val().trim();
 		newOwners = $('#my' + this._id + ' .newOwn').find(":selected").val()
 		delOwners = $('#my' + this._id + ' .delOwn').find(":selected").val()
 		if courseName.length isnt 0 and courseNumber.length isnt 0 and instructors.length isnt 0
 			courses.update({_id:this._id}, {$set: {
+				courseName: courseName
 				courseNumber: courseNumber,
 				schoolName: schoolName,
 				instructors: instructors,
@@ -302,6 +310,7 @@ Template.myCourse.events {
 				nextTaught: nextTaught
 				courseFreq: courseFreq
 				courseFreqOther: courseFreqOther
+				contactInfo: contactInfo
 				syllabusLink: syllabusLink
 				}} )
 
@@ -311,7 +320,7 @@ Template.myCourse.events {
 
 			if delOwners isnt "null"
 				courses.update({_id:this._id}, {$pull: {owners: delOwners}})	
-	'click .deletebtn': (e,t) ->
+	'dblclick .deletebtn': (e,t) ->
 		# console.log this._id
 		courses.remove({_id: this._id})
 }

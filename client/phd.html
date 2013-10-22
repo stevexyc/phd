@@ -57,6 +57,8 @@
 									{{instructors}}</p>
 									<p><strong>Frequency:</strong><br/> 
 									{{courseFreq}}</p>
+									{{#if contactInfo}}
+									<p><strong>Contact Info:</strong><br/>{{contactInfo}}</p>{{/if}}
 									{{#if syllabusLink1}}
 									<p><a target="_blank" href="{{syllabusLink}}" class="btn btn-mini btn-info" style="margin-top:10px;">View Syllabus</a></p>
 									{{/if}}
@@ -64,7 +66,7 @@
 								<div class="span9">
 									<p><strong>Description:</strong></p>
 									<div>
-										<p><textarea style="width:100%;" rows="10" disabled>{{courseDescr}}</textarea></p>
+										<p><textarea style="width:100%;" rows="15" disabled>{{courseDescr}}</textarea></p>
 									</div>
 								</div>
 							</div>
@@ -102,14 +104,16 @@
 										{{courseFreq}}</p>
 										<p><strong>Last Taught: </strong> {{prevSem1}} {{#if prevYear}}{{prevYear}}{{/if}}</p>
 										<p><strong>Next Taught: </strong> {{nextSem1}} {{#if nextYear}}{{nextYear}}{{/if}}</p>
-										{{#if syllabusLink1}}
-										<p><a target="_blank" href="{{syllabusLink}}" class="btn btn-mini btn-info" style="margin-top:10px;">View Syllabus</a></p>
+										{{#if contactInfo}}
+										<p><strong>Contact Info:</strong><br/>{{contactInfo}}</p>{{/if}}
+										{{#if syllabusLink}}
+										<p><a target="_blank" href="{{syllabusLink1}}" class="btn btn-mini btn-info" style="margin-top:10px;">View Syllabus</a></p>
 										{{/if}}
 									</div>
 									<div class="span9">
 										<p><strong>Description:</strong></p>
 										<div>
-											<p><textarea style="width:100%;" rows="10" disabled>{{courseDescr}}</textarea></p>
+											<p><textarea style="width:100%;" rows="15" disabled>{{courseDescr}}</textarea></p>
 										</div>
 									</div>
 								</div>
@@ -152,7 +156,7 @@
 										<option value="Other" {{SchoolSel 'Other'}}>Other</option>
 									</select>
 								</p>
-								<p><strong>Instructors:</strong><br/>
+								<p><strong>Instructors:</strong><small> (use comma for multiple instructors)</small><br/>
 									<input type="text" class="instructors" value="{{instructors}}"></p>
 								<p><strong>Last Taught:</strong><br/>
 									<select class="prevSem">
@@ -184,6 +188,9 @@
 								<!-- <p>courseFreqOther: {{courseFreqOther}}</p> -->
 								<p><strong>Syllabus:</strong><br/>
 								<input type="text" class="syllabus" value="{{#if syllabusLink}}{{syllabusLink}}{{else}}http://{{/if}}" placeholder="URL (including http://)"></p>
+								<p><strong>Contact Info:</strong><br/>
+								<input type="text" class="contactInfo" value="{{contactInfo}}" placeholder="email or phone">
+								</p>
 							</div>
 							<div class="span7">
 								<p><strong>Description:</strong></p>
@@ -228,7 +235,7 @@
 								<a href="#" class="btn updatebtn btn-success">Update</a>
 								<span>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 								{{#if creator}}
-								<a href="#" class="btn deletebtn btn-danger">Delete</a>
+								<a href="#" class="btn deletebtn btn-danger">Delete</a><small class="muted">&nbsp;&nbsp;(double-click to delete)</small>
 								{{/if}}
 							</div>
 						</div>
@@ -271,7 +278,7 @@
 		<div class="control-group">
 			<label class="control-label">Instructors:</label>
 			<div class="controls">
-				<input type="text" id="instructors">
+				<input type="text" id="instructors"><small> (use comma for multiple instructors)</small>
 			</div>
 		</div>
 		
@@ -309,7 +316,7 @@
 		</div>
 
 		<div class="control-group">
-			<label class="control-label">Course Frequency</label>
+			<label class="control-label">Course Frequency:</label>
 			<div class="controls">
 				<select class="span2" id="courseFreq">
 					<option value="everyYear">Every Year</option>
@@ -324,6 +331,13 @@
 			<label class="control-label">Syllabus:</label>
 			<div class="controls">
 				<input type="text" id="syllabus" placeholder="URL (including http://)" value="http://">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Contact Info:</label>
+			<div class="controls">
+				<input type="text" id="contactInfo" placeholder="email or number" maxlength="20">
 			</div>
 		</div>
 		</form>
