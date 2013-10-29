@@ -27,7 +27,7 @@ getUpcomingSem = () ->
 	}`
 	for theSem in [0,1,2]
 		arrblah.push [theSem, (nowYear + 1)]
-	`for(var n=0;n<nowSem;n++){
+	`for(var n=0;n<=nowSem;n++){
 		arrblah.push([n,nowYear +2])
 	}`
 	arrblah;
@@ -100,12 +100,19 @@ Template.mainList.coursex = () ->
 	zYear = this[1]
 	zYear1 = parseInt(zYear) - 1
 	zYear2 = parseInt(zYear) - 2
-	# zYear3 = parseInt(zYear) - 3
+	zYear3 = parseInt(zYear) - 3
 	courses.find({$or: [
 		{nextYear:zYear, nextSem:zSem}, 
 		{nextSem:zSem, courseFreq: "Every Year", nextYear: zYear1}, 
+		{nextSem:zSem, courseFreq: "Every Year", nextYear: zYear2},
+		{nextSem:zSem, courseFreq: "Every Year", nextYear: zYear3},
 		{nextSem:zSem, courseFreq: "Every Other Year", nextYear: zYear2}
 	]})
+
+Template.mainList.courseFIT = () ->
+	console.log this.nextYear
+	console.log upcomingSem
+	true
 
 Template.mainList.course = () ->
 	# courses.find({nextTaught:true, nextYear:{$gte:nowYear}, nextSem:{$gte:nowSem}},{sort:{nextYear:1, nextSem:1, courseName:1}})
@@ -168,7 +175,7 @@ Template.courseList.schoolList = () ->
 
 Template.courseList.schoolCourses = () ->
 	tmp = this.toString()
-	courses.find({schoolName: tmp});
+	courses.find({schoolName: tmp}, {sort: {courseName: 1}});
 
 Template.courseList.prevSem1 = ()->
 	convertPrevSem(this.prevSem)
@@ -239,7 +246,11 @@ Template.newCourse.events {
 }
 
 Template.myCourse.ownedCourse = ()->
-	courses.find({$or: [{owners: Meteor.userId()}, {creator: Meteor.userId()}]},{sort:{nextYear:1, nextSem:1, courseName:1}})
+	if LoadFirst.ready() and Meteor.userId()
+		if AdminOnly( Meteor.userId() )
+			courses.find({},{sort:{nextYear:1, nextSem:1, courseName:1}})
+		else 
+			courses.find({$or: [{owners: Meteor.userId()}, {creator: Meteor.userId()}]},{sort:{nextYear:1, nextSem:1, courseName:1}})
 
 Template.myCourse.PrevSemSel = (value)->
 	if value is this.prevSem then 'selected'
@@ -357,11 +368,19 @@ convertNextSem = (Sem) ->
 	else 'Previous Semesters'
 
 isAdmin = (userId) ->
-	tmp = Meteor.users.findOne({_id: userId}).username
-	# console.log tmp
-	if tmp is 'admin' or tmp is 'fsuarez' or tmp is 'tsimcoe'
-		true
-	else false
+	if LoadFirst.ready()
+		tmp = Meteor.users.findOne({_id: userId}).username 
+		# console.log tmp
+		if tmp is 'admin' or tmp is 'fsuarez' or tmp is 'tsimcoe'
+			true
+		else false
+
+AdminOnly = (userId) ->
+	if LoadFirst.ready()
+		tmp = Meteor.users.findOne({_id: userId}).username 
+		if tmp is 'admin'
+			true
+		else false
 
 Accounts.config {
 	forbidClientAccountCreation: true

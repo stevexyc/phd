@@ -23,7 +23,7 @@
 					<li><a href="#" id="myCourse">My Courses</a></li>
 					<li><a href="#" id="addMyCourse">Add Course</a></li>{{/if}}
 					{{#if adminUp}}
-						<li><a href="#" id="addMember" >Members</a></li>
+						<li><a href="#" id="addMember">Members</a></li>
 					{{/if}}
 				</ul>
 				<div class="pull-right" style="padding-top:8px">{{loginButtons align="right"}}</div>
@@ -146,7 +146,7 @@
 									<input type="text" class="crsname" value="{{courseName}}">
 								</p>
 								<p><strong>Course Number</strong><br/>
-									<input type="text" class="crsnumber" value="{{courseNumber}}" maxlength="8">
+									<input type="text" class="crsnumber" value="{{courseNumber}}" maxlength="15">
 								</p>
 								<p><strong>School</strong><br/>
 									<select class="schoolName">
@@ -175,7 +175,7 @@
 										<option value="1" {{NextSemSel 1}}>Summer</option>
 										<option value="2" {{NextSemSel 2}}>Fall</option>
 									</select>
-									<input type="text" class="nextYear" value="{{nextYear}}">
+									<input type="text" class="nextYear" value="{{#if nextYear}}{{nextYear}}{{/if}}">
 								</p>
 								<!-- <p>nextTaught: {{nextTaught}}</p> -->
 								<p><strong>Frequency:</strong><br/> 
@@ -260,7 +260,7 @@
 		<div class="control-group">
 			<label class="control-label">Course Number:</label>
 			<div class="controls">
-				<input type="text" id="courseNumber" maxlength="8">
+				<input type="text" id="courseNumber" maxlength="15">
 			</div>
 		</div>
 		<div class="control-group">
