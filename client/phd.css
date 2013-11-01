@@ -44,3 +44,8 @@ a.login-link-text {
 textarea[disabled] {
 	cursor: default !important;
 }
+
+#aboutPage p {
+	font-size: 18px;
+	line-height: 21px;
+}

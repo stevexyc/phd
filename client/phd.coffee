@@ -51,37 +51,56 @@ Template.nav.events {
 		$('#newCourse').hide()
 		$('#courseList').hide()
 		$('#myCourseList').hide()
+		$('#aboutPage').hide();
 		$('#mainList').fadeIn()
 		$('#myCourse').css('color','#999999')
 		$('#allCourse').css('color','#efefef')
+		$('#aboutUs').css('color','#999999')
 		$('#addMyCourse').css('color','#999999')
 		$('#zCourse').css('color','#999999')
 	'click #addMyCourse': (e,t) ->
 		$('#mainList').hide()
 		$('#courseList').hide()
 		$('#myCourseList').hide()
+		$('#aboutPage').hide();
 		$('#newCourse').fadeIn()
 		$('#myCourse').css('color','#999999')
 		$('#allCourse').css('color','#999999')
+		$('#aboutUs').css('color','#999999')
 		$('#addMyCourse').css('color','#efefef')
 		$('#zCourse').css('color','#999999')
+	'click #aboutUs': (e,t) ->
+		$('#newCourse').hide()
+		$('#courseList').hide()
+		$('#myCourseList').hide()
+		$('#mainList').hide()
+		$('#aboutPage').fadeIn();
+		$('#myCourse').css('color','#999999')
+		$('#allCourse').css('color','#999999')
+		$('#addMyCourse').css('color','#999999')
+		$('#zCourse').css('color','#999999')
+		$('#aboutUs').css('color','#efefef')
 	'click #myCourse': (e,t) ->
 		$('#mainList').hide()
 		$('#courseList').hide()
 		$('#newCourse').hide()
+		$('#aboutPage').hide();
 		$('#myCourseList').fadeIn()
 		$('#myCourse').css('color','#efefef')
 		$('#allCourse').css('color','#999999')
+		$('#aboutUs').css('color','#999999')
 		$('#addMyCourse').css('color','#999999')
 		$('#zCourse').css('color','#999999')
 	'click #zCourse': (e,t) ->
 		$('#newCourse').hide()
 		$('#myCourseList').hide()
 		$('#mainList').hide()
+		$('#aboutPage').hide();
 		$('#courseList').fadeIn()
 		$('#myCourse').css('color','#999999')
 		$('#allCourse').css('color','#999999')
 		$('#addMyCourse').css('color','#999999')
+		$('#aboutUs').css('color','#999999')
 		$('#zCourse').css('color','#efefef')
 	'click #addMember': (e,t) ->
 		$('#myModal').modal('show');
