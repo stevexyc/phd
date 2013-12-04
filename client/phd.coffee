@@ -286,12 +286,19 @@ Template.myCourse.courseFreqSel = (value)->
 Template.myCourse.ownerName = () ->
 	if LoadFirst.ready()
 		tmp = this.toString()
-		Meteor.users.findOne({_id: tmp}).username
+		tmp1 = Meteor.users.findOne({_id: tmp})
+		if tmp1 and tmp1.username
+			tmp1.username
+		else "admin"
+
 
 Template.myCourse.creatorName = () ->
 	if LoadFirst.ready()
 		tmp = this.creator.toString()
-		Meteor.users.findOne({_id: tmp}).username
+		tmp1 = Meteor.users.findOne({_id: tmp})
+		if tmp1 and tmp1.username
+			tmp1.username
+		else "admin"
 
 Template.myCourse.allUsers = ()->
 	Meteor.users.find({_id: {$ne: Meteor.userId()}})
