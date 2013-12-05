@@ -1,7 +1,8 @@
 courses = new Meteor.Collection('Courses')
 
 Meteor.startup ->
-	process.env.MAIL_URL = 'smtp://postmaster%40charlesriverphd.mailgun.org:4db0wwax2ap6@smtp.mailgun.org:587';
+	# process.env.MAIL_URL = 'smtp://postmaster%40charlesriverphd.mailgun.org:4db0wwax2ap6@smtp.mailgun.org:587';
+  process.env.MAIL_URL = "smtp://charlesriverphd%40gmail.com:595commave@smtp.gmail.com:465/" 
 	if Meteor.users.find().count() is 0
 		options = 
 			username: 'admin'
@@ -27,6 +28,9 @@ Meteor.methods {
       email: usremail
     }
     Accounts.sendEnrollmentEmail(newuserId)
+
+  resendEmail: (userId) ->
+    Accounts.sendEnrollmentEmail(userId)
 }
 
 Accounts.config {

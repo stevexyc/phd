@@ -356,7 +356,11 @@ Template.myCourse.events {
 				courses.update({_id:this._id}, {$addToSet: {owners: newOwners}})
 
 			if delOwners isnt "null"
-				courses.update({_id:this._id}, {$pull: {owners: delOwners}})	
+				courses.update({_id:this._id}, {$pull: {owners: delOwners}})
+				
+	'click .deletebtn': (e,t)->
+		e.preventDefault()
+		
 	'dblclick .deletebtn': (e,t) ->
 		# console.log this._id
 		courses.remove({_id: this._id})
@@ -376,9 +380,16 @@ Template.memberModal.events {
 		$('#myModal').modal('hide')
 
 	'dblclick .DelUser': (e,t) ->
+		e.preventDefault()
 		rfd = this._id 
 		console.log rfd
 		Meteor.call('deleteUser', rfd)
+
+	'click .resendEmail': (e,t) ->
+		# console.log(this._id)
+		Meteor.call('resendEmail',this._id)
+		$('#myModal').modal('hide');
+
 }
 
 convertPrevSem = (Sem) ->
